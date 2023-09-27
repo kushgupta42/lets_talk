@@ -1,0 +1,5 @@
+# ignoring virtual env data and python lib code
+server/**/bin
+server/**/lib
+server/__pycache__/**
+server/**/pyvenv.cfg
