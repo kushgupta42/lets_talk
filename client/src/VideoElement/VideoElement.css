@@ -1,0 +1,22 @@
+.video-element-wrapper {
+  margin-top: 140px;
+}
+.input {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 40px;
+  border: none;
+  display: block;
+  font-size: 30px;
+  margin-bottom: 120px;
+  margin-left: 158px;
+  margin-top: 20px;
+  padding: 10px 10px 10px 5px;
+  text-align: center;
+  width: 1000px;
+}
+
+.video-element {
+  top: 20%;
+  position: relative;
+  left: -17%;
+}

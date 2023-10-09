@@ -1,0 +1,21 @@
+.dropdown-container {
+  height: 70px;
+  width: 70px;
+  top: 60%;
+  left: 75%;
+  position: absolute;
+  background-color: aliceblue;
+  border-radius: 6px;
+}
+
+.dropdown-button {
+  height: 70px;
+  width: 70px;
+  text-align: center;
+  font-weight: bolder;
+  font-size: 16px;
+  border-radius: 6px;
+}
+
+.dropdown-option {
+}
