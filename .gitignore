@@ -3,3 +3,6 @@ server/**/bin
 server/**/lib
 server/__pycache__/**
 server/**/pyvenv.cfg
+
+# vscode config
+.vscode

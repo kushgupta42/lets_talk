@@ -1,4 +1,7 @@
 from youtube_transcript_api import YouTubeTranscriptApi
+from youtube_transcript_api.formatters import JSONFormatter
+
+json_formatter = JSONFormatter()
 
 
 def get_subtitle(video_id):
@@ -23,7 +26,8 @@ def get_subtitle(video_id):
             # translated_transcript = transcript.translate("en")
             # print("\n\n translating transcript in en\n\n")
             # print(translated_transcript.fetch())
-        return subs
+        formatted_subs = json_formatter.format_transcript(transcript=subs)
+        return formatted_subs
     except Exception as error:
         print(error)
         print("transcript not availa")
