@@ -1,3 +1,5 @@
+import json
+import os
 from youtube_transcript_api import YouTubeTranscriptApi
 from youtube_transcript_api.formatters import JSONFormatter
 
@@ -32,3 +34,11 @@ def get_subtitle(video_id):
         print(error)
         print("transcript not availa")
         raise Exception("cannot get en transcript")
+
+
+def write_subs_to_json(json_formatted_subs: json, folder_path: str, video_id: str):
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
+
+    with open(f"{folder_path}/{video_id}.json", mode="w", encoding="utf-8") as f:
+        f.write(json_formatted_subs)
