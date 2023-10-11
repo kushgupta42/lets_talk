@@ -13,6 +13,10 @@
   padding: 10px 10px 10px 5px;
   text-align: center;
   width: 1000px;
+  color: #fff;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
 }
 
 .video-element {

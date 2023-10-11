@@ -17,7 +17,6 @@ function VideoElement() {
   };
 
   function convertToEmbedURL(videoURL: string): string {
-    // Check if the input URL is a valid YouTube video URL
     const youtubeVideoRegex =
       /^(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)$/;
 
@@ -28,10 +27,11 @@ function VideoElement() {
       const embedURL = `https://www.youtube.com/embed/${videoId}`;
       return embedURL;
     } else {
-      // If the input URL doesn't match the expected format, return the input URL as is.
       return videoURL;
     }
   }
+
+  console.log("yashika: Video Link", convertToEmbedURL(enteredText));
 
   return (
     <div className="video-element-wrapper">
@@ -43,13 +43,15 @@ function VideoElement() {
         onChange={handleInputChange}
         onKeyDown={handleEnterPress}
       />
-      <iframe
-        title="Your chosen youtube video"
-        width="640"
-        height="360"
-        className="video-element"
-        src={convertToEmbedURL(enteredText)}
-      />
+      {enteredText ? (
+        <iframe
+          title="Your chosen youtube video"
+          width="640"
+          height="360"
+          className="video-element"
+          src={convertToEmbedURL(enteredText)}
+        />
+      ) : null}
     </div>
   );
 }

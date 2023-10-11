@@ -4,3 +4,15 @@
   height: 1080px;
   width: 1920px;
 }
+
+.activities {
+  height: 600px;
+  width: 400px;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  display: flex;
+  left: 1600px;
+  top: 200px;
+  flex-direction: column;
+}

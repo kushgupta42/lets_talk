@@ -11,8 +11,10 @@ function App() {
     <div className="app">
       <Header />
       <VideoElement />
-      <SearchBar />
-      <DropDown options={["abc", "def"]} />
+      <div className="activities">
+        <SearchBar />
+        <DropDown options={["abc", "def"]} />
+      </div>
     </div>
   );
 }

@@ -6,7 +6,7 @@ interface DropDownProps {
 }
 
 const DropDown: React.FC<DropDownProps> = ({ options }) => {
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+  const [selectedOption, setSelectedOption] = useState(String);
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => {
@@ -14,17 +14,18 @@ const DropDown: React.FC<DropDownProps> = ({ options }) => {
   };
 
   const handleOptionClick = (option: string) => {
-    const index = selectedOptions.indexOf(option);
+    const index = selectedOption.indexOf(option);
     if (index === -1) {
-      // Add the option to selectedOptions
-      setSelectedOptions([...selectedOptions, option]);
+      setSelectedOption(option);
     } else {
-      // Remove the option from selectedOptions
-      const updatedOptions = [...selectedOptions];
-      updatedOptions.splice(index, 1);
-      setSelectedOptions(updatedOptions);
+      // Remove the option from selectedOption
+      const updatedOptions = selectedOption;
+      setSelectedOption(updatedOptions);
     }
+    toggleDropdown();
   };
+
+  console.log("yashika- Selected Option:", selectedOption);
 
   return (
     <div className="dropdown dropdown-container">
@@ -37,16 +38,12 @@ const DropDown: React.FC<DropDownProps> = ({ options }) => {
       {isOpen && (
         <ul className="dropdown-menu">
           {options.map((option) => (
-            <li key={option} onClick={() => handleOptionClick(option)}>
-              <label>
-                <input
-                  className="dropdown-option"
-                  type="checkbox"
-                  checked={selectedOptions.includes(option)}
-                  readOnly
-                />
-                {option}
-              </label>
+            <li
+              className="dropdown-option"
+              key={option}
+              onClick={() => handleOptionClick(option)}
+            >
+              {option}
             </li>
           ))}
         </ul>
