@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import "./SearchBar.css";
 import {
   useSharedState,
@@ -6,7 +6,7 @@ import {
 } from "../SharedStateContext/SharedStateContext";
 
 const SearchBar: React.FC = () => {
-  const { isSearchOpen, searchedValue, textToBeSearched } = useSharedState();
+  const { isSearchOpen, searchedValue, selectedOption } = useSharedState();
   const { setSearchOpen, setSearchedValue, setTextToBeSearched } =
     useSharedStateSetters();
 
@@ -15,10 +15,32 @@ const SearchBar: React.FC = () => {
   };
 
   const handleEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    console.log("selectedOption:", selectedOption);
     if (event.key === "Enter") {
       setTextToBeSearched(searchedValue);
+      fetchData();
       setSearchedValue("");
     }
+  };
+
+  function encodeURLString(inputString: string): string {
+    return encodeURIComponent(inputString);
+  }
+
+  const formatUrl = () => {
+    const formattedQuestion = encodeURLString(searchedValue);
+    const baseURL = `http://localhost:8000/getAns/${selectedOption}/question=${formattedQuestion}`;
+    return baseURL;
+  };
+  const fetchData = async () => {
+    fetch(formatUrl())
+      .then((data) => data.json())
+      .then((data) => {
+        console.log("yashika-answer:", data);
+      });
+    // const myUrl = formatUrl();
+    // const urlData = await myUrl;
+    // console.log("yashika-answer", urlData);
   };
 
   const searchToggle = (
