@@ -1,9 +1,23 @@
+import json
 import os
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from llama_index.data_structs.node_v2 import Node
+from llama_index import GPTTreeIndex
+
+from dotenv import load_dotenv
+
+load_dotenv()
 
 from data_loader import get_subtitle
 from data_loader import write_subs_to_json
+from data_loader import create_time_chunks
+
+GPT_INDEX_FOLDER = "data/gpt_index"
+SUBS_FOLDER = "data/subs"
+
+time_chunk_size_mins = 5
+
 
 app = FastAPI()
 
