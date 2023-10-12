@@ -1,13 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import "./DropDown.css";
+import {
+  useSharedState,
+  useSharedStateSetters,
+} from "../SharedStateContext/SharedStateContext";
 
 interface DropDownProps {
   options: string[];
 }
 
 const DropDown: React.FC<DropDownProps> = ({ options }) => {
-  const [selectedOption, setSelectedOption] = useState(String);
-  const [isOpen, setIsOpen] = useState(false);
+  const { selectedOption, isOpen } = useSharedState();
+  const { setIsOpen, setSelectedOption, setEnteredText } =
+    useSharedStateSetters();
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -18,12 +23,16 @@ const DropDown: React.FC<DropDownProps> = ({ options }) => {
     if (index === -1) {
       setSelectedOption(option);
     } else {
-      // Remove the option from selectedOption
-      const updatedOptions = selectedOption;
-      setSelectedOption(updatedOptions);
+      const updatedOption = selectedOption;
+      setSelectedOption(updatedOption);
+      setEnteredText(convertIdToYouTubeURL(selectedOption));
     }
     toggleDropdown();
   };
+
+  function convertIdToYouTubeURL(videoId: string): string {
+    return `https://www.youtube.com/watch?v=${videoId}`;
+  }
 
   console.log("yashika- Selected Option:", selectedOption);
 

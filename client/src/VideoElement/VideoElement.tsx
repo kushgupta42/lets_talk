@@ -1,9 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import "./VideoElement.css";
+import {
+  useSharedState,
+  useSharedStateSetters,
+} from "../SharedStateContext/SharedStateContext";
 
 function VideoElement() {
-  const [inputValue, setInputValue] = useState("");
-  const [enteredText, setEnteredText] = useState("");
+  const { inputValue, enteredText, selectedOption } = useSharedState();
+  const { setEnteredText, setInputValue } = useSharedStateSetters();
+
+  useEffect(() => {
+    const youtubeVideoRegex =
+      /^(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)$/;
+
+    const match = enteredText.match(youtubeVideoRegex);
+
+    if (match) {
+      const videoId = match[1];
+      fetch(`http://localhost:8000/getAns/${videoId}?question=kkkk`)
+        .then((data) => data.json())
+        .then((data) => console.log(data))
+        .catch((error) => {
+          console.error("yashika- error while asking question", error);
+        });
+    } else {
+      console.error("yashika- not correct format");
+    }
+  }, [enteredText]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);

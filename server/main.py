@@ -1,10 +1,21 @@
 import os
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 
 from data_loader import get_subtitle
 from data_loader import write_subs_to_json
 
 app = FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 GPT_INDEX_FOLDER = "data/gpt_index"
 SUBS_FOLDER = "data/subs"

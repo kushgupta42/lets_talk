@@ -1,20 +1,23 @@
 import React, { useState } from "react";
 import "./SearchBar.css";
+import {
+  useSharedState,
+  useSharedStateSetters,
+} from "../SharedStateContext/SharedStateContext";
 
 const SearchBar: React.FC = () => {
-  const [isSearchOpen, setSearchOpen] = useState(false);
-
-  const [inputValue, setInputValue] = useState("");
-  const [enteredText, setEnteredText] = useState("");
+  const { isSearchOpen, searchedValue, textToBeSearched } = useSharedState();
+  const { setSearchOpen, setSearchedValue, setTextToBeSearched } =
+    useSharedStateSetters();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
+    setSearchedValue(event.target.value);
   };
 
   const handleEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      setEnteredText(inputValue);
-      setInputValue("");
+      setTextToBeSearched(searchedValue);
+      setSearchedValue("");
     }
   };
 
@@ -24,7 +27,7 @@ const SearchBar: React.FC = () => {
     setSearchOpen(!isSearchOpen);
   };
 
-  console.log("Yashika- Search String:", enteredText);
+  console.log("Yashika- Search String:", textToBeSearched);
 
   return (
     <div className={`search-wrapper ${isSearchOpen ? "active" : ""}`}>
@@ -33,7 +36,7 @@ const SearchBar: React.FC = () => {
           type="text"
           className="search-input"
           placeholder="Type to search"
-          value={inputValue}
+          value={searchedValue}
           onChange={handleInputChange}
           onKeyDown={handleEnterPress}
         />
