@@ -14,7 +14,6 @@ function App() {
     fetch("http://127.0.0.1:8000/list")
       .then((data) => data.json())
       .then((data) => {
-        console.log("yashika:list: ", data.video_ids);
         setListOptions(data.video_ids);
       });
   }, []);

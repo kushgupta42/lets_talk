@@ -24,9 +24,9 @@ function VideoElement() {
           console.error("yashika- error while asking question", error);
         });
     } else {
-      console.error("yashika- not correct format");
+      console.error("yashika- question not in correct format");
     }
-  }, [enteredText]);
+  }, [enteredText, selectedOption]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
@@ -53,8 +53,6 @@ function VideoElement() {
       return videoURL;
     }
   }
-
-  console.log("yashika: Video Link", convertToEmbedURL(enteredText));
 
   return (
     <div className="video-element-wrapper">

@@ -9,6 +9,10 @@ interface DropDownProps {
   options: string[];
 }
 
+function convertIdToYouTubeURL(videoId: string): string {
+  return `https://www.youtube.com/watch?v=${videoId}`;
+}
+
 const DropDown: React.FC<DropDownProps> = ({ options }) => {
   const { selectedOption, isOpen } = useSharedState();
   const { setIsOpen, setSelectedOption, setEnteredText } =
@@ -19,22 +23,17 @@ const DropDown: React.FC<DropDownProps> = ({ options }) => {
   };
 
   const handleOptionClick = (option: string) => {
+
     const index = selectedOption.indexOf(option);
+
     if (index === -1) {
       setSelectedOption(option);
     } else {
-      const updatedOption = selectedOption;
-      setSelectedOption(updatedOption);
-      setEnteredText(convertIdToYouTubeURL(selectedOption));
+      return;
     }
+    setEnteredText(convertIdToYouTubeURL(option));
     toggleDropdown();
   };
-
-  function convertIdToYouTubeURL(videoId: string): string {
-    return `https://www.youtube.com/watch?v=${videoId}`;
-  }
-
-  console.log("yashika- Selected Option:", selectedOption);
 
   return (
     <div className="dropdown dropdown-container">

@@ -27,8 +27,6 @@ const SearchBar: React.FC = () => {
     setSearchOpen(!isSearchOpen);
   };
 
-  console.log("Yashika- Search String:", textToBeSearched);
-
   return (
     <div className={`search-wrapper ${isSearchOpen ? "active" : ""}`}>
       <div className="input-holder">
