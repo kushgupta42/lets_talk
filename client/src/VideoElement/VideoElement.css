@@ -7,7 +7,7 @@
   border: none;
   display: block;
   font-size: 30px;
-  margin-bottom: 120px;
+  margin-bottom: 80px;
   margin-left: 158px;
   margin-top: 20px;
   padding: 10px 10px 10px 5px;
@@ -23,4 +23,21 @@
   top: 20%;
   position: relative;
   left: -17%;
+}
+.response-block {
+  position: absolute;
+  margin-top: 412px;
+  margin-left: -1080px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 40px;
+  border: none;
+  font-size: 30px;
+  padding: 0px 5px 5px 5px;
+  text-align: center;
+  color: #fff;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+  width: 900px;
+  height: 200px;
 }

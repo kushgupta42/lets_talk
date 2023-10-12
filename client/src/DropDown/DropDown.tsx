@@ -15,7 +15,7 @@ function convertIdToYouTubeURL(videoId: string): string {
 
 const DropDown: React.FC<DropDownProps> = ({ options }) => {
   const { selectedOption, isOpen } = useSharedState();
-  const { setIsOpen, setSelectedOption, setEnteredText } =
+  const { setIsOpen, setSelectedOption, setEnteredText, setResponse } =
     useSharedStateSetters();
 
   const toggleDropdown = () => {
@@ -23,11 +23,11 @@ const DropDown: React.FC<DropDownProps> = ({ options }) => {
   };
 
   const handleOptionClick = (option: string) => {
-
     const index = selectedOption.indexOf(option);
 
     if (index === -1) {
       setSelectedOption(option);
+      setResponse("");
     } else {
       return;
     }

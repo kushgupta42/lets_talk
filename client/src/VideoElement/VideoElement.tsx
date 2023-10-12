@@ -6,8 +6,10 @@ import {
 } from "../SharedStateContext/SharedStateContext";
 
 function VideoElement() {
-  const { inputValue, enteredText, selectedOption } = useSharedState();
-  const { setEnteredText, setInputValue } = useSharedStateSetters();
+  const { inputValue, enteredText, selectedOption, response } =
+    useSharedState();
+  const { setEnteredText, setInputValue, setSelectedOption, setResponse } =
+    useSharedStateSetters();
 
   useEffect(() => {
     const youtubeVideoRegex =
@@ -26,20 +28,80 @@ function VideoElement() {
     } else {
       console.error("yashika- question not in correct format");
     }
-  }, [enteredText, selectedOption]);
+  }, [enteredText, selectedOption, response]);
+
+  function getStartTime(input: any): string {
+    const regex = /(\d+\.\d+)/;
+    const match = input.match(regex);
+    return match ? match[0] : "";
+  }
+
+  function getEndTime(input: any): string {
+    const regex = /- (\d+\.\d+)/;
+    const match = input.match(regex);
+    return match ? match[1] : "";
+  }
+
+  useEffect(() => {
+    console.log("YASHIKA: RESPONSE-", response);
+    if (response.sources) {
+      setEnteredText(
+        addTimestampsToYouTubeURL(
+          inputValue,
+          getStartTime(response.sources),
+          getEndTime(response.sources)
+        )
+      );
+      setInputValue("");
+      setSelectedOption(
+        extractVideoId(convertToEmbedURLfromYoutubeURl(inputValue))
+      );
+      setResponse("");
+    }
+  }, [response]);
+
+  function addTimestampsToYouTubeURL(
+    baseURL: string,
+    startTime: string,
+    endTime: string
+  ): string {
+    // Ensure that the base URL ends with '/embed/' to make it a valid YouTube embed URL
+    if (!baseURL.endsWith("/embed/")) {
+      baseURL = baseURL.replace(/(\/embed\/[^?&]+).*$/, "$1");
+    }
+
+    // Construct the complete URL with start and end time parameters
+    const timestampedURL = `${baseURL}?start=${startTime}&end=${endTime}`;
+
+    return timestampedURL;
+  }
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
 
+  function extractVideoId(embedUrl: string): string {
+    const match = embedUrl.match(/\/embed\/([A-Za-z0-9_-]+)/);
+
+    if (match) {
+      return match[1];
+    } else {
+      return "";
+    }
+  }
+
   const handleEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       setEnteredText(inputValue);
       setInputValue("");
+      setSelectedOption(
+        extractVideoId(convertToEmbedURLfromYoutubeURl(inputValue))
+      );
+      setResponse("");
     }
   };
 
-  function convertToEmbedURL(videoURL: string): string {
+  function convertToEmbedURLfromYoutubeURl(videoURL: string): string {
     const youtubeVideoRegex =
       /^(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)$/;
 
@@ -48,6 +110,7 @@ function VideoElement() {
     if (match) {
       const videoId = match[1];
       const embedURL = `https://www.youtube.com/embed/${videoId}`;
+      console.log("Yashika- VideoURL:", embedURL);
       return embedURL;
     } else {
       return videoURL;
@@ -70,8 +133,11 @@ function VideoElement() {
           width="640"
           height="360"
           className="video-element"
-          src={convertToEmbedURL(enteredText)}
+          src={convertToEmbedURLfromYoutubeURl(enteredText)}
         />
+      ) : null}
+      {response ? (
+        <textarea className="response-block">{response}</textarea>
       ) : null}
     </div>
   );
