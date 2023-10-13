@@ -47,6 +47,7 @@ const SearchBar: React.FC = () => {
   const searchToggle = (
     event: React.MouseEvent<HTMLButtonElement | HTMLSpanElement>
   ): void => {
+    setSearchedValue("")
     setSearchOpen(!isSearchOpen);
   };
 

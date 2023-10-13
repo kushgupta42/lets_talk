@@ -17,7 +17,8 @@ const SpeechRecognitionComponent = () => {
     browserSupportsSpeechRecognition,
   } = useSpeechRecognition();
 
-  setSearchedValue(transcript);
+  if (listening)
+    setSearchedValue(transcript)
 
   const handleStartListening = () => {
     resetTranscript();
