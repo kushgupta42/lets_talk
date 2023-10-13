@@ -50,19 +50,23 @@ async def root():
 @app.get("/getAns/{video_id}")
 async def get_response(video_id: str, question: str):
     try:
-        subs = get_subtitle(video_id)
-        f = open(f"{GPT_INDEX_FOLDER}/{video_id}.json", mode="w", encoding="utf8")
-        f.write(subs)
-        f.close()
-        write_subs_to_json(subs, SUBS_FOLDER, video_id)
-        create_time_chunks("data/subs", "data/timechunks", time_chunk_size_mins)
-        data = json.load(open(file=f"data/timechunks/{video_id}.json", mode="r"))
-        # keys, text = list(zip(*data.items()))
-        # yaha se kuch samajh nahin aaya
-        nodes = [Node(text=text, doc_id=keys) for keys, text in data.items()]
-        index = GPTTreeIndex(nodes=nodes)
-        # save it
-        index.save_to_disk(f"data/gpt_index/{video_id}.json")
+        filenames = os.listdir("data/gpt_index")
+        file_loc = f"{video_id}.json"
+        if file_loc not in filenames:
+            print("New video id request",video_id)
+            subs = get_subtitle(video_id)
+            write_subs_to_json(subs, SUBS_FOLDER, video_id)
+
+            create_time_chunks("data/subs", "data/timechunks", time_chunk_size_mins)
+            data = json.load(open(file=f"data/timechunks/{video_id}.json", mode="r"))
+            # keys, text = list(zip(*data.items()))
+            # yaha se kuch samajh nahin aaya
+            nodes = [Node(text=text, doc_id=keys) for keys, text in data.items()]
+            index = GPTTreeIndex(nodes=nodes)
+            # save it
+            index.save_to_disk(f"data/gpt_index/{video_id}.json")
+
+        index = GPTTreeIndex.load_from_disk(f"data/gpt_index/{video_id}.json")
 
         # response = index.query(f"{system_prompt}\n{question}")
 

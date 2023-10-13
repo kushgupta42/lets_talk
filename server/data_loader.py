@@ -66,7 +66,7 @@ def get_subtitle(video_id):
             return formatted_subs
     except Exception as error:
         print(error)
-        print("transcript not availa")
+        print("transcript not availaiable")
         raise Exception("cannot get en transcript")
 
 
