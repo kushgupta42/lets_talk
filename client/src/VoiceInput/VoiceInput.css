@@ -1,0 +1,13 @@
+.mic-icon {
+  /* Set the background image or icon content for the microphone */
+  background-image: url("https://www.freeiconspng.com/uploads/microphone-png-17.png");
+  /* Adjust the size and position of the icon as needed */
+  width: 40px;
+  height: 40px;
+  background-size: cover;
+}
+
+/* .button {
+  border: transparent;
+  padding: 0 0.5rem;
+} */
