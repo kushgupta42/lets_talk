@@ -6,30 +6,52 @@ import {
 } from "../SharedStateContext/SharedStateContext";
 
 function VideoElement() {
-  const { inputValue, enteredText, response } =
+  const { inputValue, embedUrl, enteredText, response, selectedOption } =
     useSharedState();
-  const { setEnteredText, setInputValue, setSelectedOption, setResponse } =
-    useSharedStateSetters();
-    
- 
-  // useEffect(() => {
-  //   const youtubeVideoRegex =
-  //     /^(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)$/;
+  const {
+    setEnteredText,
+    setInputValue,
+    setSelectedOption,
+    setResponse,
+    setEmbedUrl,
+  } = useSharedStateSetters();
 
-  //   const match = enteredText.match(youtubeVideoRegex);
+  useEffect(() => {
+    if (response.sources) {
+      setEnteredText(
+        addTimestampsToYouTubeURL(embedUrl, getStartTime(response.sources))
+      );
 
-  //   if (match) {
-  //     const videoId = match[1];
-  //     fetch(`http://localhost:8000/getAns/${videoId}?question=${inputValue}`)
-  //       .then((data) => data.json())
-  //       .then((data) => console.log(data))
-  //       .catch((error) => {
-  //         console.error("yashika- error while asking question", error);
-  //       });
-  //   } else {
-  //     console.error("yashika- question not in correct format");
-  //   }
-  // }, [enteredText, selectedOption, response]);
+      console.log(
+        "YASHIKA: Final URL- ",
+        addTimestampsToYouTubeURL(embedUrl, getStartTime(response.sources))
+      );
+      setInputValue("");
+      setSelectedOption(
+        extractVideoId(convertToEmbedURLfromYoutubeURl(inputValue))
+      );
+      setResponse("");
+    }
+  }, [response]);
+
+  useEffect(() => {
+    const youtubeVideoRegex =
+      /^(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)$/;
+
+    const match = enteredText.match(youtubeVideoRegex);
+
+    if (match) {
+      const videoId = match[1];
+      fetch(`http://localhost:8000/getAns/${videoId}?question=${inputValue}`)
+        .then((data) => data.json())
+        .then((data) => console.log(data))
+        .catch((error) => {
+          console.error("yashika- error while asking question", error);
+        });
+    } else {
+      console.error("yashika- question not in correct format");
+    }
+  }, [enteredText, selectedOption, response]);
 
   function getStartTime(input: any): string {
     const regex = /(\d+\.\d+)/;
@@ -43,30 +65,9 @@ function VideoElement() {
     return match ? match[1] : "";
   }
 
-  useEffect(() => {
-   
-   
-    console.log("YASHIKA: RESPONSE-", response);
-    if (response.sources) {
-      // setEnteredText(
-      //   addTimestampsToYouTubeURL(
-      //     inputValue,
-      //     getStartTime(response.sources),
-      //     getEndTime(response.sources)
-      //   )
-      // );
-      // setInputValue("");
-      // setSelectedOption(
-      //   extractVideoId(convertToEmbedURLfromYoutubeURl(inputValue))
-      // );
-      // setResponse("");
-    }
-  }, [response]);
-
   function addTimestampsToYouTubeURL(
     baseURL: string,
-    startTime: string,
-    endTime: string
+    startTime: string
   ): string {
     // Ensure that the base URL ends with '/embed/' to make it a valid YouTube embed URL
     if (!baseURL.endsWith("/embed/")) {
@@ -74,7 +75,7 @@ function VideoElement() {
     }
 
     // Construct the complete URL with start and end time parameters
-    const timestampedURL = `${baseURL}?start=${startTime}&end=${endTime}`;
+    const timestampedURL = `${baseURL}?start=${startTime}`;
 
     return timestampedURL;
   }
@@ -115,8 +116,10 @@ function VideoElement() {
       const videoId = match[1];
       const embedURL = `https://www.youtube.com/embed/${videoId}`;
       console.log("Yashika- VideoURL:", embedURL);
+      setEmbedUrl(embedURL);
       return embedURL;
     } else {
+      setEmbedUrl(videoURL);
       return videoURL;
     }
   }
@@ -140,9 +143,13 @@ function VideoElement() {
           src={convertToEmbedURLfromYoutubeURl(enteredText)}
         />
       ) : null}
-       {response.response ? (
-        <textarea id="responceTextArea" value={response.response} className="response-block"></textarea>
-        ) : null}
+      {response.response ? (
+        <textarea
+          id="responceTextArea"
+          value={response.response}
+          className="response-block"
+        ></textarea>
+      ) : null}
     </div>
   );
 }

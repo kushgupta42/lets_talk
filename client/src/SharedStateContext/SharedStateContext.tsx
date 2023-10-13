@@ -12,6 +12,7 @@ interface SharedState {
   searchedValue: string;
   textToBeSearched: string;
   response: any;
+  embedUrl: string;
 }
 
 // Define setters for shared state
@@ -24,6 +25,7 @@ interface SharedStateSetters {
   setSearchedValue: React.Dispatch<React.SetStateAction<string>>;
   setTextToBeSearched: React.Dispatch<React.SetStateAction<string>>;
   setResponse: React.Dispatch<React.SetStateAction<any>>;
+  setEmbedUrl: React.Dispatch<React.SetStateAction<string>>;
 }
 
 // Create contexts for shared state and setters
@@ -50,6 +52,7 @@ export function SharedStateProvider({ children }: SharedStateProviderProps) {
   const [searchedValue, setSearchedValue] = useState("");
   const [textToBeSearched, setTextToBeSearched] = useState("");
   const [response, setResponse] = useState("");
+  const [embedUrl, setEmbedUrl] = useState("");
 
   return (
     <SharedStateContext.Provider
@@ -62,6 +65,7 @@ export function SharedStateProvider({ children }: SharedStateProviderProps) {
         searchedValue,
         textToBeSearched,
         response,
+        embedUrl,
       }}
     >
       <SharedStateSettersContext.Provider
@@ -74,6 +78,7 @@ export function SharedStateProvider({ children }: SharedStateProviderProps) {
           setSearchedValue,
           setTextToBeSearched,
           setResponse,
+          setEmbedUrl,
         }}
       >
         {children}

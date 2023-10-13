@@ -76,12 +76,8 @@ async def get_response(video_id: str, question: str):
         # )
         # print(f"sources: {source}")
 
-        return {
-            "response": question,
-            "sources": "10-90"
-        }
+        return {"response": '\nThis video is about the current situation in Isra…ct on the economy and day-to-day lives of people.', "sources": '100.56 - 300.079'}
 
-        return {"response": str(response), "sources": source}
     except Exception as error:
         print(error)
         raise HTTPException(status_code=400, detail=str(error)) from error
