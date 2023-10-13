@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./VideoElement.css";
 import {
   useSharedState,
@@ -21,16 +21,10 @@ function VideoElement() {
       setEnteredText(
         addTimestampsToYouTubeURL(embedUrl, getStartTime(response.sources))
       );
-
-      console.log(
-        "YASHIKA: Final URL- ",
-        addTimestampsToYouTubeURL(embedUrl, getStartTime(response.sources))
-      );
       setInputValue("");
       setSelectedOption(
         extractVideoId(convertToEmbedURLfromYoutubeURl(inputValue))
       );
-      setResponse("");
     }
   }, [response]);
 
@@ -45,9 +39,7 @@ function VideoElement() {
       fetch(`http://localhost:8000/getAns/${videoId}?question=${inputValue}`)
         .then((data) => data.json())
         .then((data) => console.log(data))
-        .catch((error) => {
-          console.error("yashika- error while asking question", error);
-        });
+        .catch((error) => {});
     } else {
       console.error("yashika- question not in correct format");
     }
@@ -102,7 +94,6 @@ function VideoElement() {
       setSelectedOption(
         extractVideoId(convertToEmbedURLfromYoutubeURl(inputValue))
       );
-      setResponse("");
     }
   };
 
@@ -115,7 +106,6 @@ function VideoElement() {
     if (match) {
       const videoId = match[1];
       const embedURL = `https://www.youtube.com/embed/${videoId}`;
-      console.log("Yashika- VideoURL:", embedURL);
       setEmbedUrl(embedURL);
       return embedURL;
     } else {
@@ -123,6 +113,8 @@ function VideoElement() {
       return videoURL;
     }
   }
+
+  console.log("yashika: Response", response);
 
   return (
     <div className="video-element-wrapper">
@@ -143,7 +135,7 @@ function VideoElement() {
           src={convertToEmbedURLfromYoutubeURl(enteredText)}
         />
       ) : null}
-      {response.response ? (
+      {response ? (
         <textarea
           id="responceTextArea"
           value={response.response}
