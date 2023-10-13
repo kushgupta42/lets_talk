@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./VideoElement.css";
 import {
   useSharedState,
@@ -6,29 +6,30 @@ import {
 } from "../SharedStateContext/SharedStateContext";
 
 function VideoElement() {
-  const { inputValue, enteredText, selectedOption, response } =
+  const { inputValue, enteredText, response } =
     useSharedState();
   const { setEnteredText, setInputValue, setSelectedOption, setResponse } =
     useSharedStateSetters();
+    
+ 
+  // useEffect(() => {
+  //   const youtubeVideoRegex =
+  //     /^(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)$/;
 
-  useEffect(() => {
-    const youtubeVideoRegex =
-      /^(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)$/;
+  //   const match = enteredText.match(youtubeVideoRegex);
 
-    const match = enteredText.match(youtubeVideoRegex);
-
-    if (match) {
-      const videoId = match[1];
-      fetch(`http://localhost:8000/getAns/${videoId}?question=kkkk`)
-        .then((data) => data.json())
-        .then((data) => console.log(data))
-        .catch((error) => {
-          console.error("yashika- error while asking question", error);
-        });
-    } else {
-      console.error("yashika- question not in correct format");
-    }
-  }, [enteredText, selectedOption, response]);
+  //   if (match) {
+  //     const videoId = match[1];
+  //     fetch(`http://localhost:8000/getAns/${videoId}?question=${inputValue}`)
+  //       .then((data) => data.json())
+  //       .then((data) => console.log(data))
+  //       .catch((error) => {
+  //         console.error("yashika- error while asking question", error);
+  //       });
+  //   } else {
+  //     console.error("yashika- question not in correct format");
+  //   }
+  // }, [enteredText, selectedOption, response]);
 
   function getStartTime(input: any): string {
     const regex = /(\d+\.\d+)/;
@@ -43,20 +44,22 @@ function VideoElement() {
   }
 
   useEffect(() => {
+   
+   
     console.log("YASHIKA: RESPONSE-", response);
     if (response.sources) {
-      setEnteredText(
-        addTimestampsToYouTubeURL(
-          inputValue,
-          getStartTime(response.sources),
-          getEndTime(response.sources)
-        )
-      );
-      setInputValue("");
-      setSelectedOption(
-        extractVideoId(convertToEmbedURLfromYoutubeURl(inputValue))
-      );
-      setResponse("");
+      // setEnteredText(
+      //   addTimestampsToYouTubeURL(
+      //     inputValue,
+      //     getStartTime(response.sources),
+      //     getEndTime(response.sources)
+      //   )
+      // );
+      // setInputValue("");
+      // setSelectedOption(
+      //   extractVideoId(convertToEmbedURLfromYoutubeURl(inputValue))
+      // );
+      // setResponse("");
     }
   }, [response]);
 
@@ -91,6 +94,7 @@ function VideoElement() {
   }
 
   const handleEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    console.log(" video inputValue:", inputValue);
     if (event.key === "Enter") {
       setEnteredText(inputValue);
       setInputValue("");
@@ -136,9 +140,9 @@ function VideoElement() {
           src={convertToEmbedURLfromYoutubeURl(enteredText)}
         />
       ) : null}
-      {response ? (
-        <textarea className="response-block">{response}</textarea>
-      ) : null}
+       {response.response ? (
+        <textarea id="responceTextArea" value={response.response} className="response-block"></textarea>
+        ) : null}
     </div>
   );
 }

@@ -78,8 +78,7 @@ async def get_response(video_id: str, question: str):
 
         return {
             "response": question,
-            "start_time": 0,
-            "end_time": 200,
+            "sources": "10-90"
         }
 
         return {"response": str(response), "sources": source}

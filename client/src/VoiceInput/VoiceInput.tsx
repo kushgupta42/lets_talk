@@ -2,8 +2,14 @@ import React from "react";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
+import {useSharedStateSetters } from "../SharedStateContext/SharedStateContext";
+  
 
 const SpeechRecognitionComponent = () => {
+  const {  setResponse, setSearchedValue } =
+    useSharedStateSetters();
+
+    
   const {
     transcript,
     listening,
@@ -11,11 +17,13 @@ const SpeechRecognitionComponent = () => {
     browserSupportsSpeechRecognition,
   } = useSpeechRecognition();
 
+  setSearchedValue(transcript);
+
   const handleStartListening = () => {
     resetTranscript();
     SpeechRecognition.startListening();
   };
-
+  
   return (
     <div>
       {browserSupportsSpeechRecognition ? (
@@ -28,7 +36,6 @@ const SpeechRecognitionComponent = () => {
               alt="Clipart Microphone PNG"
             />
           </button>
-          <p>{transcript}</p>
         </div>
       ) : (
         <p>Your browser doesn't support speech recognition.</p>
