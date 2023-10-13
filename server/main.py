@@ -64,19 +64,19 @@ async def get_response(video_id: str, question: str):
         # save it
         index.save_to_disk(f"data/gpt_index/{video_id}.json")
 
-        response = index.query(f"{system_prompt}\n{question}")
+        # response = index.query(f"{system_prompt}\n{question}")
 
-        print(f"response: {response}")
-        source = " ".join(
-            [node_with_score.node.doc_id for node_with_score in response.source_nodes]
-        )
-        print(f"sources: {source}")
+        # print(f"response: {response}")
+        # source = " ".join(
+        #     [node_with_score.node.doc_id for node_with_score in response.source_nodes]
+        # )
+        # print(f"sources: {source}")
 
-        # return {
-        #     "response": question,
-        #     "start_time": 0,
-        #     "end_time": 200,
-        # }
+        return {
+            "response": question,
+            "start_time": 0,
+            "end_time": 200,
+        }
 
         return {"response": str(response), "sources": source}
     except Exception as error:

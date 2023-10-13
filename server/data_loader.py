@@ -14,7 +14,7 @@ def srt_to_json():
     srt_content = None
     for encoding in encodings_to_try:
         try:
-            with open('King.Kong.2005.720p.HDTV.Premier.x264-ESiR.srt', 'r', encoding=encoding) as srt_file:
+            with open('data/srt/King.Kong.2005.720p.HDTV.Premier.x264-ESiR.srt', 'r', encoding=encoding) as srt_file:
                 srt_content = srt_file.read()
             break  # Stop trying encodings if successful
         except UnicodeDecodeError:
