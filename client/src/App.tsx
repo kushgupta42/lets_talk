@@ -7,6 +7,7 @@ import VideoElement from "./VideoElement/VideoElement";
 import DropDown from "./DropDown/DropDown";
 import { SharedStateProvider } from "./SharedStateContext/SharedStateContext";
 import VoiceInput from "./VoiceInput/VoiceInput";
+import ButtonToNewTab from "./ButtonToNewTab/ButtonToNewTab";
 
 function App() {
   const [listOptions, setListOptions] = useState<string[]>([]);
@@ -28,6 +29,7 @@ function App() {
           <SearchBar />
           <VoiceInput />
           <DropDown options={listOptions} />
+          <ButtonToNewTab></ButtonToNewTab>
         </div>
       </div>
     </SharedStateProvider>

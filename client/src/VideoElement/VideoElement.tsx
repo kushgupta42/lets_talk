@@ -48,13 +48,13 @@ function VideoElement() {
   function getStartTime(input: any): string {
     const regex = /(\d+\.\d+)/;
     const match = input.match(regex);
-    return match ? match[0] : "";
+    return match ? Math.floor(match[0]).toString() : "";
   }
 
   function getEndTime(input: any): string {
     const regex = /- (\d+\.\d+)/;
     const match = input.match(regex);
-    return match ? match[1] : "";
+    return match ? Math.floor(match[1]).toString() : "";
   }
 
   function addTimestampsToYouTubeURL(
