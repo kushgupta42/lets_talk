@@ -57,8 +57,6 @@ async def get_response(video_id: str, question: str):
         write_subs_to_json(subs, SUBS_FOLDER, video_id)
         create_time_chunks("data/subs", "data/timechunks", time_chunk_size_mins)
         data = json.load(open(file=f"data/timechunks/{video_id}.json", mode="r"))
-        # keys, text = list(zip(*data.items()))
-        # yaha se kuch samajh nahin aaya
         nodes = [Node(text=text, doc_id=keys) for keys, text in data.items()]
         index = GPTTreeIndex(nodes=nodes)
         # save it

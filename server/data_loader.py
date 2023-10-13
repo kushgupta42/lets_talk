@@ -56,12 +56,6 @@ def get_subtitle(video_id):
                     transcript = transcript.translate("en")
                 # fetch the actual transcript data
                 subs = transcript.fetch()
-                # translated_transcript = transcript.translate("de")
-                # print("\n\n translating transcript in de\n\n")
-                # print(translated_transcript.fetch())
-                # translated_transcript = transcript.translate("en")
-                # print("\n\n translating transcript in en\n\n")
-                # print(translated_transcript.fetch())
             formatted_subs = json_formatter.format_transcript(transcript=subs)
             return formatted_subs
     except Exception as error:
@@ -87,10 +81,6 @@ def create_time_chunks(
         print(file)
         f = open(file)
         data = json.loads(f.read())
-
-        # # logging
-        # print(type(data))
-        # print(f"data: {data}")
 
         # start with empty dict that you will keep adding to
         timechunks = {}
