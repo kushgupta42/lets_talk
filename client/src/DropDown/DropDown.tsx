@@ -1,9 +1,12 @@
 import React from "react";
-import "./DropDown.css";
 import {
   useSharedState,
   useSharedStateSetters,
 } from "../SharedStateContext/SharedStateContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBookmark } from "@fortawesome/free-solid-svg-icons";
+
+import "./DropDown.css";
 
 interface DropDownProps {
   options: string[];
@@ -41,7 +44,11 @@ const DropDown: React.FC<DropDownProps> = ({ options }) => {
         className="dropdown-toggle dropdown-button"
         onClick={toggleDropdown}
       >
-        Saved Videos
+        <FontAwesomeIcon
+          icon={faBookmark}
+          className="bookmarked"
+          style={{ fontSize: "36px" }}
+        ></FontAwesomeIcon>
       </button>
       {isOpen && (
         <ul className="dropdown-menu">

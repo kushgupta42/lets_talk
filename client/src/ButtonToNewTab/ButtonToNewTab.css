@@ -1,0 +1,18 @@
+.container-new-tab {
+  height: 70px;
+  width: 70px;
+  background-size: cover;
+  margin-bottom: 30px;
+}
+
+.button-to-new-tab {
+  width: 70px;
+  height: 70px;
+  border: none;
+  border-radius: 6px;
+  padding: 0px;
+  outline: none;
+  text-align: center;
+  font-weight: bolder;
+  font-size: 16px;
+}

@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
-import "./VideoElement.css";
 import {
   useSharedState,
   useSharedStateSetters,
 } from "../SharedStateContext/SharedStateContext";
+
+import "./VideoElement.css";
 
 function VideoElement() {
   const { inputValue, embedUrl, enteredText, response, selectedOption } =
@@ -138,7 +139,7 @@ function VideoElement() {
       {response ? (
         <textarea
           id="responceTextArea"
-          value={response.response}
+          value={response.response + " \nVideo Segment: " + response.sources}
           className="response-block"
         ></textarea>
       ) : null}

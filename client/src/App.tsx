@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Header/Header";
-
-import "./App.css";
 import SearchBar from "./SearchBar/SearchBar";
 import VideoElement from "./VideoElement/VideoElement";
 import DropDown from "./DropDown/DropDown";
 import { SharedStateProvider } from "./SharedStateContext/SharedStateContext";
 import VoiceInput from "./VoiceInput/VoiceInput";
 import ButtonToNewTab from "./ButtonToNewTab/ButtonToNewTab";
+
+import "./App.css";
 
 function App() {
   const [listOptions, setListOptions] = useState<string[]>([]);
@@ -28,8 +28,8 @@ function App() {
         <div className="activities">
           <SearchBar />
           <VoiceInput />
-          <DropDown options={listOptions} />
           <ButtonToNewTab></ButtonToNewTab>
+          <DropDown options={listOptions} />
         </div>
       </div>
     </SharedStateProvider>

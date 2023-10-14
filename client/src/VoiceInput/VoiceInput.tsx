@@ -2,14 +2,13 @@ import React from "react";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
-import {useSharedStateSetters } from "../SharedStateContext/SharedStateContext";
-  
+import { useSharedStateSetters } from "../SharedStateContext/SharedStateContext";
+
+import "./VoiceInput.css";
 
 const SpeechRecognitionComponent = () => {
-  const {  setResponse, setSearchedValue } =
-    useSharedStateSetters();
+  const { setSearchedValue } = useSharedStateSetters();
 
-    
   const {
     transcript,
     listening,
@@ -17,27 +16,23 @@ const SpeechRecognitionComponent = () => {
     browserSupportsSpeechRecognition,
   } = useSpeechRecognition();
 
-  if (listening)
-    setSearchedValue(transcript)
+  if (listening) setSearchedValue(transcript);
 
   const handleStartListening = () => {
     resetTranscript();
     SpeechRecognition.startListening();
   };
-  
+
   return (
-    <div>
+    <div className="mic-icon">
       {browserSupportsSpeechRecognition ? (
-        <div>
-          <button onClick={handleStartListening} disabled={listening}>
-            <img
-              src="https://www.freeiconspng.com/uploads/microphone-png-17.png"
-              width="30"
-              height="40"
-              alt="Clipart Microphone PNG"
-            />
-          </button>
-        </div>
+        <button
+          className="voice-inout-button"
+          onClick={handleStartListening}
+          disabled={listening}
+        >
+          <i className="fa fa-microphone" style={{ fontSize: "36px" }}></i>
+        </button>
       ) : (
         <p>Your browser doesn't support speech recognition.</p>
       )}
@@ -45,12 +40,7 @@ const SpeechRecognitionComponent = () => {
   );
 };
 const VoiceInput: React.FC = () => {
-  return (
-    <div>
-      <SpeechRecognitionComponent />{" "}
-      {/* Include the SpeechRecognitionComponent here */}
-    </div>
-  );
+  return <SpeechRecognitionComponent />;
 };
 
 export default VoiceInput;
