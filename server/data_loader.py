@@ -118,6 +118,7 @@ def create_time_chunks(
         print(f"running_composite: {running_composite}")
         print(f"time chunks: {timechunks}")
 
+        # To capture missing chunk.
         if len(running_composite):
             text = " ".join(running_composite)
             timechunks[f"{current_time_pos} - {end_time}"] = text
