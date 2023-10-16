@@ -19,7 +19,8 @@ const SearchBar: React.FC = () => {
     console.log("Search bar selectedOption:", selectedOption);
     if (event.key === "Enter") {
       setTextToBeSearched(searchedValue);
-      fetchData();
+      if (searchedValue)
+        fetchData();
       setSearchedValue(searchedValue);
     }
   };

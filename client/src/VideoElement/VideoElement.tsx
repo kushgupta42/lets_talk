@@ -29,23 +29,6 @@ function VideoElement() {
     }
   }, [response]);
 
-  useEffect(() => {
-    const youtubeVideoRegex =
-      /^(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)$/;
-
-    const match = enteredText.match(youtubeVideoRegex);
-
-    if (match) {
-      const videoId = match[1];
-      fetch(`http://localhost:8000/getAns/${videoId}?question=${inputValue}`)
-        .then((data) => data.json())
-        .then((data) => console.log(data))
-        .catch((error) => {});
-    } else {
-      console.error("yashika- question not in correct format");
-    }
-  }, [enteredText, selectedOption, response]);
-
   function getStartTime(input: any): string {
     // const regex = /(\d+\.\d+)/;
     // const match = input.match(regex);
