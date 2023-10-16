@@ -47,9 +47,12 @@ function VideoElement() {
   }, [enteredText, selectedOption, response]);
 
   function getStartTime(input: any): string {
-    const regex = /(\d+\.\d+)/;
-    const match = input.match(regex);
-    return match ? Math.floor(match[0]).toString() : "";
+    // const regex = /(\d+\.\d+)/;
+    // const match = input.match(regex);
+    // return match ? Math.floor(match[0]).toString() : "";
+
+    const times = input.split("-");
+    return Math.floor(times[0]).toString();
   }
 
   function getEndTime(input: any): string {

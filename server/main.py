@@ -68,15 +68,11 @@ async def get_response(video_id: str, question: str):
 
         index = GPTTreeIndex.load_from_disk(f"data/gpt_index/{video_id}.json")
 
-        # response = index.query(f"{system_prompt}\n{question}")
-
-        # print(f"response: {response}")
-        # source = " ".join(
-        #     [node_with_score.node.doc_id for node_with_score in response.source_nodes]
-        # )
-        # print(f"sources: {source}")
-
-        return {"response": '\nThis video is about the current situation in Isra…ct on the economy and day-to-day lives of people.', "sources": '100.56 - 300.079'}
+        response = index.query(f"{system_prompt}\n{question}")
+        source = " ".join(
+            [node_with_score.node.doc_id for node_with_score in response.source_nodes]
+        )
+        return {"response": str(response), "sources": source}
 
     except Exception as error:
         print(error)
